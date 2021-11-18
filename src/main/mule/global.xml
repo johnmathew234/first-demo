@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:apix-magento-sapi="http://www.mulesoft.org/schema/mule/apix-magento-sapi" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd http://www.mulesoft.org/schema/mule/apix-magento-sapi http://www.mulesoft.org/schema/mule/apix-magento-sapi/current/mule-apix-magento-sapi.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+    
+    <tls:context name="tlsContext" doc:name="TLS Context" doc:id="6de38e65-0260-4aa0-a3ec-680eb94e0396">
+        <tls:key-store type="${tls.keystore.type}" path="${tls.keystore.path}" alias="${tls.keystore.alias}" keyPassword="${secure::tls.keystore.password}" password="${secure::tls.keystore.password}" />
+    </tls:context>
+    <secure-properties:config name="securePropertiesConfig" doc:name="Secure Properties Config" doc:id="6926873e-91d1-4715-9b09-71eef7f8f1f1" file="properties/secure-${mule.env}.yaml" key="${secure.key}">
+        <secure-properties:encrypt algorithm="Blowfish" />
+    </secure-properties:config>
+    <configuration-properties doc:name="propertiesFileConfig" doc:id="556e4802-5b4e-4d6c-9e0e-dc9e5f873950" file="properties/common-properties.yaml" />
+    
+    <global-property doc:name="Global Property" doc:id="f529242b-4c2f-4a73-9ffe-ddf1224d1891" name="mule.env" value="${mule.env}" />
+    <apikit:config name="apiMagentoSapiConfig" api="resource::b0beec90-c6cc-4c36-8f7c-ef1f8f91253b:apix-magento-sapi:1.0.3:raml:zip:apix-magento-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <http:listener-config name="apiHttpListenerConfig" doc:name="HTTP Listener config" doc:id="cae15abb-de07-4d54-90cb-2e772aa0edbf">
+        <http:listener-connection host="0.0.0.0" port="${api.port}" protocol="HTTPS" tlsContext="tlsContext"/>
+    </http:listener-config>
+    <http:request-config name="apiHttpRequestConfig" doc:name="HTTP Request configuration" doc:id="1caf6a2d-bb68-4cf4-8a27-14696e33b781" basePath="${magentoConfig.basePath}">
+        <http:request-connection host="${magentoConfig.host}" />
+    </http:request-config>
+    <global-property doc:name="Global Property" doc:id="a7b1fa9e-69b4-4a10-ac37-85fc46e9fc37" name="secure.key" value="${secure.key}" />
+    <import doc:name="importHealth" doc:id="b980c43a-ac49-45e7-8689-9671a313aa64" file="common-health.xml" />
+    <import doc:name="importCommonErrorHandler" doc:id="e960c550-2d69-486e-9906-c565f0666888" file="common-error-handler.xml" />
+    <configuration doc:name="errorConfig" doc:id="8e7bf95c-30c2-42b4-8717-29acaa56508c" defaultErrorHandler-ref="common-error-handler" />
+	<configuration-properties doc:name="configProperties" doc:id="c1556931-a2fe-4aed-ae44-ea86bcd5bb96" file="properties\secure-${mule.env}.yaml" />
+<!-- 	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="apiAutodiscovery" doc:id="bab902bc-c2f5-4501-9e35-c3a952c5ce83" flowRef="apix-magento-sapi-main" /> -->
+</mule>

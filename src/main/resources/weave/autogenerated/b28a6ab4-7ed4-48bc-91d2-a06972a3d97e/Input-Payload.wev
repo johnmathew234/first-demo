@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_b28a6ab4_7ed4_48bc_91d2_a06972a3d97e_Input_Payload = Array<{|  carrier_code: String,   method_code: String,   carrier_title: String,   method_title: String,   amount: Number,   base_amount: Number,   available: Boolean,   error_message: String,   price_excl_tax: Number,   price_incl_tax: Number|}>
+

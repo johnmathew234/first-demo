@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
+    <flow name="apix-magento-sapi-main">
+        <http:listener path="/api/*" config-ref="apiHttpListenerConfig">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="apiMagentoSapiConfig" />
+    </flow>
+    <flow name="post:\customer\authentication:application\json:apiMagentoSapiConfig">
+        <flow-ref doc:name="customer-authentication-flow" doc:id="03e19c29-74fc-4862-b1ad-0b66c90b1abc" name="customer-authentication-flow" />
+    </flow>
+    <flow name="post:\admin\authentication:application\json:apiMagentoSapiConfig">
+        <flow-ref doc:name="admin-authentication-flow" doc:id="68934622-a23e-488b-aaa7-025c471c60e1" name="admin-authentication-flow" />
+    </flow>
+    <flow name="post:\customer\authentication\getcartid:application\json:apiMagentoSapiConfig">
+        <flow-ref doc:name="get-cart-id-flow" doc:id="5e4410d1-f31d-4a0a-a04c-eab0f6b0f9f2" name="get-cart-id-flow" />
+    </flow>
+    <flow name="get:\admin\allProducts:apiMagentoSapiConfig" doc:id="32e1b1cc-62ce-4493-914d-ff4d9737d45f">
+		<flow-ref doc:name="get-all-products-flow" doc:id="36152162-8a88-4718-a2f5-99b2f8ceecce" name="get-all-products-flow"/>
+    </flow>
+    <flow name="post:\customer\authentication\cartid:application\json:apiMagentoSapiConfig">
+		<flow-ref doc:name="get-cart-id-flow" doc:id="46cc2f21-fed7-44d3-99e0-88df14c9bd37" name="get-cart-id-flow"/>
+    </flow>
+    <flow name="post:\customer\authentication\productCart\estimateShipping\checkout:application\json:apiMagentoSapiConfig" doc:id="d484526b-b35f-4155-99d2-b4614b048d58">
+		<flow-ref doc:name="check-out-flow" doc:id="f6c82d0a-e57e-43b9-98e9-d723662efe82" name="check-out-flow"/>
+    </flow>
+    <flow name="post:\customer:application\json:apiMagentoSapiConfig" doc:id="66326552-3b3c-4f14-893c-001152ecc038">
+		<flow-ref doc:name="create-customer-flow" doc:id="11a8570f-3cb7-433e-959f-67c91c02b050" name="create-customer-flow"/>
+    </flow>
+    <flow name="post:\customer\authentication\productCart\estimateShipping:application\json:apiMagentoSapiConfig" doc:id="4f782456-c2fa-4a8a-a25f-df5d58da9991">
+		<flow-ref doc:name="estimate-shipping-flow" doc:id="ba8b7c32-67da-4c3a-ba3b-193f43d4dccd" name="estimate-shipping-flow"/>
+    </flow>
+    <flow name="post:\customer\authentication\productCart\estimateShipping\checkout\order:application\json:apiMagentoSapiConfig" doc:id="6da3101d-bd90-427f-89ab-fca0cdb44fcf">
+		<flow-ref doc:name="create-order-flow" doc:id="09fc8282-9679-4a09-88f8-c3eb6fed2302" name="create-order-flow"/>
+    </flow>
+    <flow name="post:\customer\authentication\productCart:application\json:apiMagentoSapiConfig" doc:id="db047b23-b3af-4daf-9b69-7239208f6fb9">
+		<flow-ref doc:name="add-products-cart-flow" doc:id="ab1236db-1813-4daa-b929-4c753a86ae61" name="add-products-cart-flow"/>
+    </flow>
+</mule>

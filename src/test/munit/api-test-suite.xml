@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="api-test-suite.xml" />
+	<munit:test name="get:\admin\allProducts:apiMagentoSapiConfig-test" doc:id="04221ce2-d932-4b46-b8aa-3409764e40c2" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock all Products" doc:id="d37cb09a-127d-4ce8-939a-4c21a3bdc49e" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="36152162-8a88-4718-a2f5-99b2f8ceecce" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://allproductstest\mock_payload.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="get:\admin\allProducts:apiMagentoSapiConfig" doc:id="6c1eda5f-43f0-4e40-a7d9-ad7cc335534d" name="get:\admin\allProducts:apiMagentoSapiConfig"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert expression" doc:id="ebd6d92f-65c1-47f5-bc69-8c593d14d252" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="post:\admin\authentication:application\json:apiMagentoSapiConfig-test" doc:id="3acef50c-0f31-40e9-84b4-8d1382291d53" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Admin authentication" doc:id="63f9ea5c-9817-4b8f-bfb7-c99d32f09290" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="b4f3763d-16c5-44bd-9922-022c1908075e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://adminauthenticationtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="847bdd37-dcc9-4d57-8527-831a7e64e4a2" >
+				<munit:payload value="#[readUrl('classpath://adminauthenticationtest\set-event_payload.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\admin\authentication:application\json:apiMagentoSapiConfig" doc:id="7a79dd3a-18f6-4192-861f-9716b09f1c5d" name="post:\admin\authentication:application\json:apiMagentoSapiConfig"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert expression" doc:id="6ba108b4-2d79-42f1-a2a2-8311244ccc42" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="post:\customer:application\json:apiMagentoSapiConfig-test" doc:id="a4b049fd-36cc-4718-a0a5-243693cef1e4" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Create Customer" doc:id="424364d0-0617-44dd-ba88-5da156612a03" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="11a8570f-3cb7-433e-959f-67c91c02b050" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://createcustomertest\mock_payload.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="c9074e85-8391-403d-a7d9-c016c2ac0b5d" >
+				<munit:payload value="#[readUrl('classpath://createcustomertest\set-event_payload.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\customer:application\json:apiMagentoSapiConfig" doc:id="5d1fd0e1-e14c-43aa-8942-f5e5b76cd365" name="post:\customer:application\json:apiMagentoSapiConfig"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert expression" doc:id="b9d97c6d-18bc-444e-900f-ded589668421" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="post:\customer\authentication:application\json:apiMagentoSapiConfig-test" doc:id="7a4f1dcf-f90e-4602-a32b-500f322b0766" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Customer Authentication" doc:id="d1722e0c-c852-4a15-965f-55c7277a136c" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="fde2176b-84b5-4583-9152-dea4aee2abde" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://customerauthenticationtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="7a2a7427-aaff-4328-9dce-f22464ad37a1" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://customerauthenticationtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\customer\authentication:application\json:apiMagentoSapiConfig" doc:id="753ca9c8-d50c-45c8-99e4-dc9ee9cca787" name="post:\customer\authentication:application\json:apiMagentoSapiConfig"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert expression" doc:id="ce41afb1-421d-4439-8fb5-0c3470808d1a" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-apix-magento-sapi-main-test" doc:id="fd4e59d2-b5c0-4ba8-a908-176a4a701f59" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock APIKit Router" doc:id="57bf47d5-beff-4928-815b-9ff64733070f" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apiMagentoSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://apixmagentosapimaintest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="cf704074-e38b-49bb-8d73-f93779673585" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://apixmagentosapimaintest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="apix-magento-sapi-main" doc:id="bd8e3129-8f89-400e-8070-16bc906c165c" name="apix-magento-sapi-main"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert expression" doc:id="f4476c03-e9f7-442b-ae2f-527d03991c4b" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-post:\customer\authentication\productCart:application\json:apiMagentoSapiConfigTest" doc:id="6dc8e0e2-672e-4a66-86e3-a509bf43293a" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="2348564d-1770-4dda-a9c9-d886c0dc2c7a" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="ab1236db-1813-4daa-b929-4c753a86ae61" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://addProductCart\mock_payload.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\customer\authentication\productCart:application\json:apiMagentoSapiConfig" doc:id="261a1b5e-73af-43c4-ba34-7a5cfa962dcc" name="post:\customer\authentication\productCart:application\json:apiMagentoSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert expression" doc:id="6b668107-c4ff-4114-aef8-473e4a486ab5" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-post:\customer\authentication\productCart\estimateShipping\checkout:application\json:apiMagentoSapiConfigTest" doc:id="29de7bdb-322b-47cc-9021-b6700296f5c0" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="ea4032a3-92c1-4603-961f-a327e0d26de3" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f6c82d0a-e57e-43b9-98e9-d723662efe82" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://checkouttest\mock_payload.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\customer\authentication\productCart\estimateShipping\checkout:application\json:apiMagentoSapiConfig" doc:id="9df99e97-3350-4581-9109-25d762bbedaa" name="post:\customer\authentication\productCart\estimateShipping\checkout:application\json:apiMagentoSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert expression" doc:id="a5c403db-5825-4600-923c-1e3165eb9ae7" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-post:\customer\authentication\productCart\estimateShipping\checkout\order:application\json:apiMagentoSapiConfigTest" doc:id="7c85f977-d959-46b9-89cd-002628b204e2" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="b98847dd-cd70-467c-83df-b0c7d38f5639" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="09fc8282-9679-4a09-88f8-c3eb6fed2302" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://createordertest\mock_payload.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\customer\authentication\productCart\estimateShipping\checkout\order:application\json:apiMagentoSapiConfig" doc:id="afc4462d-0037-4b52-ab5a-6a506a7c0f61" name="post:\customer\authentication\productCart\estimateShipping\checkout\order:application\json:apiMagentoSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert expression" doc:id="0dddb304-06b5-4d89-ae45-919e05248657" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-post:\customer\authentication\productCart\estimateShipping:application\json:apiMagentoSapiConfigTest" doc:id="4771cd19-d9d5-4b85-908a-1075285b1b77" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="b47b9593-d1b5-482e-908a-038fbbff1843" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="ba8b7c32-67da-4c3a-ba3b-193f43d4dccd" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://estimateshippingtest\mock_payload.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\customer\authentication\productCart\estimateShipping:application\json:apiMagentoSapiConfig" doc:id="2fa712bd-587a-403f-97c0-c33722cd671e" name="post:\customer\authentication\productCart\estimateShipping:application\json:apiMagentoSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert expression" doc:id="e200023b-2d43-4f31-9d18-202cdf707612" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="api-test-suite-post:\customer\authentication\getcartid:application\json:apiMagentoSapiConfigTest" doc:id="aef4e89d-9b46-4e43-bc15-4a0aa05d0a38" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="267f0055-1e16-47ba-ba3c-3620bcfb4626" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="5e4410d1-f31d-4a0a-a04c-eab0f6b0f9f2" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://getcartidtest\mock_payload.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="post:\customer\authentication\getcartid:application\json:apiMagentoSapiConfig" doc:id="66c83d67-9e38-4d89-9405-cb098df4a80c" name="post:\customer\authentication\getcartid:application\json:apiMagentoSapiConfig"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert expression" doc:id="2f59f77b-5d54-44d3-8119-7ec26e149a5d" />
+		</munit:validation>
+	</munit:test>
+	
+
+
+</mule>

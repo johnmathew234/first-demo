@@ -1,0 +1,20 @@
+%dw 2.0
+
+type auto_cf5d269b_87c4_4009_85c1_dca7ff83de2f_Input_Payload = {
+  firstname: String, 
+  city: String, 
+  postcode: String, 
+  telephone: String, 
+  countryId: String, 
+  lastname: String, 
+  regionCode: String, 
+  password: String, 
+  defaultBilling: Boolean, 
+  regionId: Number, 
+  street: String, 
+  region: String, 
+  defaultShipping: Boolean, 
+  email: String, 
+  _?: Any
+}
+

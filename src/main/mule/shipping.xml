@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<flow name="estimate-shipping-flow" doc:id="b28a6ab4-7ed4-48bc-91d2-a06972a3d97e" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="a8608395-0c77-4a93-9f85-c3956d7259ef" message="#[payload]"/>
+		<ee:transform doc:name="Json Body for Shipping Estimate" doc:id="2144d79c-9e22-4e4a-b099-910b8a7b4a8c" >
+			<ee:message >
+				<ee:set-payload resource="dwl/estimate-shipping.dwl" />
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request for Shipping Estimate" doc:id="02bb3eb3-1415-43db-aa6a-1d6f9ef17911" config-ref="apiHttpRequestConfig" path="${magentoConfig.estimateShipping}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization" : "Bearer " ++ attributes.headers.Authorization
+}]]]></http:headers>
+		</http:request>
+		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="To Json" doc:id="24b90bfc-c737-45af-8ff2-5a7269f63490" />
+		<logger level="INFO" doc:name="End Logger" doc:id="add690a5-a528-46a6-a066-dd4182acd17d" message="#[payload]"/>
+	</flow>
+	<flow name="check-out-flow" doc:id="60335f0b-eb0c-4e14-b9cf-8137478a3db8" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="74e2d455-2e12-4584-b277-694df1fa0dfa" message="#[payload]"/>
+		<ee:transform doc:name="Json Body for Checkout" doc:id="847fb00b-abb7-4548-8419-fe82dbfeda74" >
+			<ee:message >
+				<ee:set-payload resource="dwl/check-out.dwl" />
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request for Checking out" doc:id="ca5fb900-6d39-4619-8e3a-678e60b54a00" config-ref="apiHttpRequestConfig" path="${magentoConfig.checkOut}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization" : "Bearer " ++ attributes.headers.Authorization
+}]]]></http:headers>
+		</http:request>
+		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="To Json" doc:id="669d0199-b18c-46de-9e39-50c5d680868d" />
+		<logger level="INFO" doc:name="End Logger" doc:id="6eb6024d-338a-4757-acd7-452eb7bf14c0" message="#[payload]"/>
+	</flow>
+	<flow name="create-order-flow" doc:id="6425305d-ea40-491e-ae2a-fe16785a5cc0" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="875ed2dd-7f0f-4440-8684-320edf52aae5" message="#[payload]"/>
+		<ee:transform doc:name="Json Body to Create Order" doc:id="ad4e9220-97cb-4b53-92bc-578cab73ddd3" >
+			<ee:message >
+				<ee:set-payload resource="dwl/create-order.dwl" />
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request to Create Order" doc:id="ced71c95-78e4-4cc8-83b8-37222ba80b09" config-ref="apiHttpRequestConfig" path="${magentoConfig.createOrder}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization" : "Bearer " ++ attributes.headers.Authorization
+}]]]></http:headers>
+		</http:request>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;"Order Placed with OrderId: " ++ payload]' doc:name="To Json" doc:id="45eae48c-351d-4d59-a293-e021bde764e8" />
+		<logger level="INFO" doc:name="End Logger" doc:id="aae2ba5f-3880-4e44-9b76-b9fc50c214bb" message="#[payload]"/>
+	</flow>
+</mule>

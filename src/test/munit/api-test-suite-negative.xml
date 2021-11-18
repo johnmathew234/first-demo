@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<munit:config name="api-test-suite-negative.xml" />
+	<munit:test name="apix-magento-sapi-main-bad-request" doc:id="5be63cbb-1250-44c3-a548-cd4cceb86671" description="Test">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="a424671f-cd0e-4d36-bc53-11fce2790f24" processor="apikit:router">
+				<munit-tools:with-attributes>
+					<munit-tools:with-attribute whereValue="apiMagentoSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="2b99eb4f-0f62-4dee-acc0-c01e3fbc60cf" >
+				<flow-ref doc:name="apix-magento-sapi-main" doc:id="ef2dea55-dd46-427e-a31b-5539286f0b7e" name="apix-magento-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="b45c3762-5308-4b1d-98e7-b258eb71d204" >
+						<logger level="INFO" doc:name="Logger" doc:id="3e5bf085-bb4e-4926-8de9-9057d989356f" message='#[""]'/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="6f9567f9-4f36-47ff-818f-8ce979ebd0bd" actual="#[payload.errorType.identifier]" expected="#['BAD_REQUEST']"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="apix-magento-sapi-main-resource-not-found" doc:id="d858c118-c3d3-4873-b125-722fe5ff0055" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="e7f29a3e-ffbf-423c-86aa-79438ae21e69" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apiMagentoSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="a89cb635-dddc-425c-84b8-911678944dea" >
+				<flow-ref doc:name="apix-magento-sapi-main" doc:id="8db01406-0b98-49e8-b16f-fa2afa1c0c96" name="apix-magento-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="9f3bebe2-f906-45c0-8116-477a7a8a6a5b" >
+						<logger level="INFO" doc:name="Logger" doc:id="ba2db921-d661-4396-be48-b6fd0812304b" message='#[""]'/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="fe9ca170-ac53-46ee-b1d0-8708e9f1c6ae" expected="#['NOT_FOUND']" actual="#[payload.errorType.identifier]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="apix-magento-sapi-main-method-not-allowed" doc:id="befea9ae-08ec-471d-b392-f9c93ca960df" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="fb1de9fc-2e46-40d5-8062-31ca10c7cf70" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apiMagentoSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="4ddafcc3-2188-451d-ace4-ef587c805ab8" >
+				<flow-ref doc:name="apix-magento-sapi-main" doc:id="19a832da-b930-4242-8794-be8649053318" name="apix-magento-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="7236c9c6-d67f-4185-9c2e-0580e81a1cc9" >
+						<logger level="INFO" doc:name="Logger" doc:id="41ae77df-2ee1-44a3-addb-f04f006a1e68" message='#[""]'/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="7482fa76-5902-4548-887f-3c9fee338423" expected="#['METHOD_NOT_ALLOWED']" actual="#[payload.errorType.identifier]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="apix-magento-sapi-main-not-acceptable" doc:id="ef45d69e-ae0d-4a3e-9038-80b110a8b6ab" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="f82d29be-f871-47ce-b5f1-59f4e90232fa" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apiMagentoSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="1183e4f9-b010-4187-b762-1676a3d0d9e2" >
+				<flow-ref doc:name="apix-magento-sapi-main" doc:id="e2e7e99d-3519-48a2-96fb-14096bd775d4" name="apix-magento-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="0ab52e82-4f69-4e9d-b425-a685bf2552b0" >
+						<logger level="INFO" doc:name="Logger" doc:id="1b670a62-a463-4cb3-b360-208431ac0de6" message='#[""]'/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="3d437b15-e62e-4c99-af30-ac78fae21cea" expected="#['NOT_ACCEPTABLE']" actual="#[payload.errorType.identifier]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="apix-magento-sapi-unsupported-media-type" doc:id="e04a2dc0-4df7-4b73-abd2-c27ff4f17d57" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="688d0e13-559c-487e-8b8a-b5f5f60a8d42" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apiMagentoSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="02cb651f-01d0-4540-8fbb-2468756218ee" >
+				<flow-ref doc:name="apix-magento-sapi-main" doc:id="3ad80ca8-4d24-4ba7-8845-0e8d1ba5b702" name="apix-magento-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="bc23da5d-a596-4e92-9578-968818ec8f9b" >
+						<logger level="INFO" doc:name="Logger" doc:id="9e3c426a-6547-4250-96f8-2d5973c237a9" message='#[""]'/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="20c41608-4900-48bc-9a5a-ea4dab4a0730" expected="#['UNSUPPORTED_MEDIA_TYPE']" actual="#[payload.errorType.identifier]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="apix-magento-sapi-main-not-implemented" doc:id="aa9686c7-0834-4472-81fd-f65898c11987" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="d663f398-0dc0-47f7-ba1c-1481d86522a6" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="apiMagentoSapiConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="4a5cbb15-5f46-489f-af5a-b5d8c0c62a94" >
+				<flow-ref doc:name="apix-magento-sapi-main" doc:id="6fcec135-0339-41ba-a6b0-0da1911631c6" name="apix-magento-sapi-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="2962e9eb-589f-4fbe-87dd-d8d78f8acc15" >
+						<logger level="INFO" doc:name="Logger" doc:id="36cc93cf-74e6-4fd4-8f43-6568499f6963" message='#[""]'/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="19e292db-7e33-42de-971c-5fb3b8336e14" expected="#['NOT_IMPLEMENTED']" actual="#[payload.errorType.identifier]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

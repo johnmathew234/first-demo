@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="product-test-suite-pos.xml" />
+	<munit:test name="all-products-flow-test" doc:id="02609cc2-b443-4e8b-8b41-9564e0789d9d" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock to get All Products" doc:id="f67f5e10-3ff7-4da6-a1f3-fbb13a6e89a8" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="5fdb3d34-562a-42e6-ab35-c55efb9cb3ac" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://allproductstest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="get-all-products-flow" doc:id="f2d3adc1-0f43-43c4-9ab3-34db493c2bda" name="get-all-products-flow"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert expression" doc:id="7a5f5738-2f46-4725-8b0e-123eb20d8deb" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="product-test-suite-get-cart-id-flowTest" doc:id="b73b45c1-3304-4324-8f99-248f16513ef0" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="570fda62-d6ea-4713-ac8d-28f7d45fb79e" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="df75d735-1bf6-4642-a72d-04d4cd4dc2dc" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://getcartidtest\mock_payload.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="get-cart-id-flow" doc:id="8f9fbbb7-3a83-4131-b6f8-5ee20fb17b7d" name="get-cart-id-flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert expression" doc:id="6d13a8a7-135f-4a12-beb6-0e2d0ad6bdeb" />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

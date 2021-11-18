@@ -1,0 +1,26 @@
+api: 
+  groupId: "b0beec90-c6cc-4c36-8f7c-ef1f8f91253b"
+  artifactId: "apix-magento-sapi"
+  version: "1.0.3"
+  spec: "resource::${api.groupId}:${api.artifactId}:${api.version}:oas:zip:api.json"
+  majorVersion: "v1"
+  port: "8082"
+  listenerConfig: "apiHttpListenerConfig"
+  
+  
+magentoConfig: 
+  host: "dev.bluelilys.com"
+  basePath: "rest/V1"
+  getAllProducts: "/products?searchCriteria[pageSize]=40"
+  getCartId : "/carts/mine"
+  addItemToCart : "/carts/mine/items"
+  authenticateAdmin : "/integration/admin/token"
+  authenticateCustomer : "/integration/customer/token"
+  createCustomer : "/customers"
+  createOrder : "/carts/mine/payment-information"
+  checkOut : "/carts/mine/shipping-information"
+  estimateShipping : "/carts/mine/estimate-shipping-methods"
+  protocol : "HTTP"
+  port : "80"
+  
+

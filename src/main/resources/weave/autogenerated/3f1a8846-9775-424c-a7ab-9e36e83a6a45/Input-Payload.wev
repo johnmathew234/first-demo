@@ -1,0 +1,352 @@
+%dw 2.0
+
+type auto_3f1a8846_9775_424c_a7ab_9e36e83a6a45_Input_Payload = {|
+  items: Array<{|    id: Number,     sku: String,     name: String,     attribute_set_id: Number,     price: Number,     status: Number,     visibility: Number,     type_id: String,     created_at: String,     updated_at: String,     weight: Number,     product_links: Array<Nothing>, 
+    tier_prices: Array<Nothing>, 
+    custom_attributes: Array<{|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: Array<"283" | "289">
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |}>
+  |} | {|
+    id: Number, 
+    sku: String, 
+    name: String, 
+    attribute_set_id: Number, 
+    price: Number, 
+    status: Number, 
+    visibility: Number, 
+    type_id: String, 
+    created_at: String, 
+    updated_at: String, 
+    weight: Number, 
+    product_links: Array<Nothing>, 
+    tier_prices: Array<Nothing>, 
+    custom_attributes: Array<{|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: Array<Nothing>
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |}>
+  |} | {|
+    id: Number, 
+    sku: String, 
+    name: String, 
+    attribute_set_id: Number, 
+    price: Number, 
+    status: Number, 
+    visibility: Number, 
+    type_id: String, 
+    created_at: String, 
+    updated_at: String, 
+    weight: Number, 
+    product_links: Array<Nothing>, 
+    tier_prices: Array<Nothing>, 
+    custom_attributes: Array<{|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: Array<Nothing>
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |}>
+  |} | {|
+    id: Number, 
+    sku: String, 
+    name: String, 
+    attribute_set_id: Number, 
+    price: Number, 
+    status: Number, 
+    visibility: Number, 
+    type_id: String, 
+    created_at: String, 
+    updated_at: String, 
+    weight: Number, 
+    product_links: Array<Nothing>, 
+    tier_prices: Array<Nothing>, 
+    custom_attributes: Array<{|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: Array<"286" | "315">
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |}>
+  |} | {|
+    id: Number, 
+    sku: String, 
+    name: String, 
+    attribute_set_id: Number, 
+    price: Number, 
+    status: Number, 
+    visibility: Number, 
+    type_id: String, 
+    created_at: String, 
+    updated_at: String, 
+    weight: Number, 
+    product_links: Array<Nothing>, 
+    tier_prices: Array<Nothing>, 
+    custom_attributes: Array<{|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: String    |} | {|      attribute_code: String,       value: Array<String>
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |} | {|
+      attribute_code: String, 
+      value: String
+    |}>
+  |}>, 
+  search_criteria: {|
+    filter_groups: Array<Nothing>, 
+    page_size: Number
+  |}, 
+  total_count: Number
+|}
+

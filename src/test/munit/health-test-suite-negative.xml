@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="health-test-suite-negative.xml" />
+	<munit:test name="health-test-suite-readiness-check-subflow-test" doc:id="bb865bf2-527d-4eba-a1aa-c377736a43fa" description="Test">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="1790b8c3-9823-430b-a22d-cde7e0751ded" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="8d98185c-668d-4d74-a7b0-0ff47850ca98" attributeName="doc:id" />
+					<munit-tools:with-attribute whereValue="apiHttpRequestConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="HTTP:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="92e74553-4332-440c-a18c-0f68be3dabcf" >
+				<flow-ref doc:name="readiness-check-subflow" doc:id="47645ed5-e6aa-464e-aaba-5eabe08d101b" name="readiness-check-subflow" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="b02cc873-eff2-4c61-bc60-73e07172dc4a" >
+						<logger level="INFO" doc:name="Logger" doc:id="d6f18168-8fd0-46e1-a537-9b067be161dd" message="#[payload]"/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="3f8f1518-2bf5-4e96-aef0-3d3af5bc3344" actual="#[payload]" expected='#[{&#10;  "servicename": "Magento",&#10;  "status": "up"&#10;}]'/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

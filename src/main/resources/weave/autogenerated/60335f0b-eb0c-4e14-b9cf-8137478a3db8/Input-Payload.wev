@@ -1,0 +1,28 @@
+%dw 2.0
+
+type auto_60335f0b_eb0c_4e14_b9cf_8137478a3db8_Input_Payload = {
+  billing_region_id: Number, 
+  firstname: String, 
+  billing_telephone: String, 
+  city: String, 
+  region_id: Number, 
+  postcode: String, 
+  telephone: String, 
+  billing_lastname: String, 
+  billing_region_code: String, 
+  lastname: String, 
+  billing_street: String, 
+  billing_city: String, 
+  billing_region: String, 
+  street: String, 
+  billing_postcode: String, 
+  billing_email: String, 
+  billing_firstname: String, 
+  region: String, 
+  country_id: String, 
+  email: String, 
+  billing_country_id: String, 
+  region_code: String, 
+  _?: Any
+}
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:apix-magento-sapi="http://www.mulesoft.org/schema/mule/apix-magento-sapi"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/apix-magento-sapi http://www.mulesoft.org/schema/mule/apix-magento-sapi/current/mule-apix-magento-sapi.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<flow name="get-all-products-flow" doc:id="3f1a8846-9775-424c-a7ab-9e36e83a6a45" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="75abb2ce-b796-4c48-b812-09d61f713eab"/>
+		<http:request method="GET" doc:name="Get All Products" doc:id="5fdb3d34-562a-42e6-ab35-c55efb9cb3ac" config-ref="apiHttpRequestConfig" path="${magentoConfig.getAllProducts}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization" : "Bearer " ++ attributes.headers.Authorization
+}]]]></http:headers>
+		</http:request>
+		<ee:transform doc:name="To Json" doc:id="2b15bbbf-c377-47a8-9a3b-43319444823e" >
+			<ee:message >
+				<ee:set-payload resource="dwl/get-all-products.dwl" />
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="End Logger" doc:id="d7717444-587a-46b2-bbc3-9f76e3334c8c"/>
+	</flow>
+	<flow name="add-products-cart-flow" doc:id="42561523-be0c-4720-a1a2-c8250cd9c39f" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="e818f3c7-05cf-4a09-bd84-79d787f41877" message="#[payload]"/>
+		<set-variable value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"data" : payload,&#10;	"Authorization" : "Bearer " ++ attributes.headers.Authorization&#10;}]' doc:name="Original Payload" doc:id="23d61c2b-2333-4857-9fd2-69fc63d54998" variableName="originalPayload"/>
+		<ee:transform doc:name="Json Body to Add to Cart" doc:id="2f0607ab-ad9c-47b2-b9d7-2c86e07e2547" >
+			<ee:message >
+				<ee:set-payload resource="dwl/add-products-cart.dwl" />
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request to add Item to Cart" doc:id="95ba7217-ac48-466d-a0e8-dfc2d6eb7939" config-ref="apiHttpRequestConfig" path="${magentoConfig.addItemToCart}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization" : vars.originalPayload.Authorization
+}]]]></http:headers>
+		</http:request>
+		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="To Json" doc:id="e01638a3-7724-4e66-9c7b-5101e16b246a" />
+		<logger level="INFO" doc:name="End Logger" doc:id="39411a97-2c42-423f-a893-36728e7cc3d2" message="#[payload]"/>
+	</flow>
+	<flow name="get-cart-id-flow" doc:id="82f6e3f3-76a5-44e7-9d6c-e35da7e93add">
+		<logger level="INFO" doc:name="Start Logger" doc:id="c2b5add9-305f-4353-8ad1-181b6641df55" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="99dabc24-843f-47bf-a034-0812cfc50bd1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request for Cart Id" doc:id="df75d735-1bf6-4642-a72d-04d4cd4dc2dc" config-ref="apiHttpRequestConfig" path="${magentoConfig.getCartId}" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization" : "Bearer " ++ attributes.headers.Authorization
+}]]]></http:headers>
+		</http:request>
+		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="Set Payload" doc:id="8cc87fb0-8385-4daa-9856-2bb4450ae61a" />
+		<logger level="INFO" doc:name="End Logger" doc:id="7f4a930b-e905-49c2-a5a8-c5af518976f9" message="#[payload]"/>
+	</flow>
+</mule>

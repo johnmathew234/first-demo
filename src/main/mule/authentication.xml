@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<flow name="admin-authentication-flow" doc:id="e46bb1e8-8836-49de-80ed-e868618aacc2" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="59749cc7-1c1b-468c-833a-abc20bf74b93" message="#[payload]"/>
+		<ee:transform doc:name="Json Body" doc:id="cf1ae6e6-4fb8-459d-b736-6235f94f936f" >
+			<ee:message >
+				<ee:set-payload resource="dwl/admin-authentication.dwl" />
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request for admin authentication" doc:id="beab1352-8ec8-426d-b752-165a167ec718" config-ref="apiHttpRequestConfig" path="${magentoConfig.authenticateAdmin}"/>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{"AdminToken" : payload}]' doc:name="To Json" doc:id="40f2b7d8-73a7-4ba0-bf05-66a6326ed94e" />
+		<logger level="INFO" doc:name="End Logger" doc:id="4f6b8cae-f046-40e2-9a73-9abcfe1dc202" message="#[payload]"/>
+	</flow>
+	<flow name="customer-authentication-flow" doc:id="0bbf8886-8d24-4bbf-954d-dab025312037" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="aa2b376d-a70a-463f-af04-b73f38126591" message="#[payload]"/>
+		<ee:transform doc:name="Json Body" doc:id="bf07d824-5def-4825-a261-4150a648c391" >
+			<ee:message >
+				<ee:set-payload resource="dwl/customer-authentication.dwl" />
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request for customer authentication" doc:id="0cbb921a-459a-43b0-a7bf-9eaed821725d" config-ref="apiHttpRequestConfig" path="${magentoConfig.authenticateCustomer}"/>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{"CustomerToken" : payload}]' doc:name="To Json" doc:id="39e462e4-b8b3-4e40-932b-6277e891602d" />
+		<logger level="INFO" doc:name="End Logger" doc:id="e4c36993-2f45-4dc2-928b-e2e5f3fb7c1e" message="#[payload]"/>
+	</flow>
+</mule>

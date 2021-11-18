@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="authentication-test-suite-pos.xml" />
+	<munit:test name="admin-authentication-flow-test" doc:id="e2375868-b07f-4f7f-b742-367906f95c1f" description="Test">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="e2d46a17-1349-4269-a008-f25194c38c37" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="beab1352-8ec8-426d-b752-165a167ec718" attributeName="doc:id" />
+					<munit-tools:with-attribute whereValue="apiHttpRequestConfig" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://adminauthenticationtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="d6a51521-2d36-409f-811d-0b91a8ab1421" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://adminauthenticationtest\set-event_payload.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution>
+			<flow-ref doc:name="admin-authentication-flow" doc:id="1d559aae-ad99-4eac-adc7-400549ed897a" name="admin-authentication-flow" />
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert Payload" doc:id="ddc38d25-ac08-433e-9b06-1ac40ab2be03" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="customer-authentication-flow-test" doc:id="79261f07-d3bb-4130-9b69-7aaa8f9070b2" description="Test">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock request for Customer auth" doc:id="fd6add92-fa54-47f3-991d-bb88ac6cbb3b" processor="http:request">
+				<munit-tools:with-attributes>
+					<munit-tools:with-attribute whereValue="0cbb921a-459a-43b0-a7bf-9eaed821725d" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://customerauthenticationtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="269b8e34-a2f7-4a96-829b-d8dd6aa77a8d" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://customerauthenticationtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution>
+			<flow-ref doc:name="customer-authentication-flow" doc:id="bc033bc3-3e7d-4521-ab98-58a7f1a9bcc1" name="customer-authentication-flow" />
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert Payload" doc:id="92ef8f2d-1f2e-471d-afd9-be980858c74d" />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

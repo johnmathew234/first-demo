@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="shipping-suite.xml" />
+	<munit:test name="estimate-shipping-flow-test" doc:id="cb25eb7d-1383-4031-afa0-c2d0e4f43b5e" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock request for estimate shipping" doc:id="8624ebd0-84e0-40f9-ac9f-b3bc9d209ca9" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="02bb3eb3-1415-43db-aa6a-1d6f9ef17911" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://estimateshippingtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="78a7ebc9-e0bc-42e0-960f-eafd6c968877" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://estimateshippingtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="estimate-shipping-flow" doc:id="78907858-7778-4ecd-87f0-f697ed09f25a" name="estimate-shipping-flow"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert expression" doc:id="713c2fdf-6731-45b6-ba26-3f8e5f979fbd" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="check-out-flow-test" doc:id="d1ea16cc-f713-4a3e-998d-ba95e92be9dc" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock request to check out" doc:id="153cc102-8d05-41fe-9c49-8f941caed6b8" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="ca5fb900-6d39-4619-8e3a-678e60b54a00" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://checkouttest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Event" doc:id="2012c3e9-019d-45c5-9699-811c1adbd8e1" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://checkouttest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="check-out-flow" doc:id="de2c0acd-e624-4b16-8b04-2d640fa50462" name="check-out-flow"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert expression" doc:id="6179b31b-9178-48c2-b891-5d9e220f1001" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="create-order-flow-test" doc:id="fdfc7d20-d9ba-4ca1-bcd1-d0e76772a646" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock request to create order" doc:id="3a8de2c9-8070-45df-8713-cadc83ed38f5" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="ced71c95-78e4-4cc8-83b8-37222ba80b09" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://createordertest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="67b188fa-1311-4e7d-b71a-ea2238eb1c35" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://createordertest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="create-order-flow" doc:id="5dac7e4f-99e6-45f1-bc46-5e4c83d7f7f1" name="create-order-flow"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert doc:name="Assert expression" doc:id="0a258366-0535-4755-be26-580a5b24e3c0" />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

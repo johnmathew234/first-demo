@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<flow name="create-customer-flow" doc:id="cf5d269b-87c4-4009-85c1-dca7ff83de2f" >
+		<logger level="INFO" doc:name="Start logger" doc:id="4bc366ea-3961-465e-9f29-66c44b6527e9" message="#[payload]"/>
+		<ee:transform doc:name="Json body for creating customer" doc:id="bd3da696-470c-462e-beff-33c42e102846" >
+			<ee:message >
+				<ee:set-payload resource="dwl/customer-creation.dwl" />
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request to create customer" doc:id="d8f3c951-03f6-4996-8e4b-b238e949571e" config-ref="apiHttpRequestConfig" path="${magentoConfig.createCustomer}"/>
+		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="To Json" doc:id="7a240fc9-4a3c-4788-b959-8d27a2bc1148" />
+		<logger level="INFO" doc:name="End Logger" doc:id="36c4daa6-1c0e-45de-adcf-61d28defa098" message="#[payload]"/>
+	</flow>
+</mule>

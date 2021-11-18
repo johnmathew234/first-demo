@@ -1,0 +1,26 @@
+tls.keystore:
+  password: "![TjrgNiKb/sw=]"
+  type: "pkcs12"
+  path: "certs/apix-magento-sapi-test.p12"
+  alias: "server"
+  
+magentoConfig: 
+  host: "dev.bluelilys.com"
+  basePath: "rest/V1"
+  getAllProducts: "/products"
+  getCartId : "/carts/mine"
+  addItemToCart : "/carts/mine/items"
+  authenticateAdmin : "/integration/admin/token"
+  authenticateCustomer : "/integration/customer/token"
+  createCustomer : "/customers"
+  createOrder : "/carts/mine/payment-information"
+  checkOut : "/carts/mine/shipping-information"
+  estimateShipping : "/carts/mine/estimate-shipping-methods"
+  protocol : "HTTP"
+  port : "80"
+ 
+api:
+  id: "123456"
+
+  
+  

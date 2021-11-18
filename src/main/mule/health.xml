@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="readiness-check-subflow" doc:id="cad29bb1-0765-4e16-b064-a96ed453dc38" >
+		<try doc:name="Try" doc:id="a3472bde-6b25-4aa5-ac7e-bd4230fe63ea" >
+			<http:request method="POST" doc:name="Request for Admin auth" doc:id="8d98185c-668d-4d74-a7b0-0ff47850ca98" config-ref="apiHttpRequestConfig" path="${magentoConfig.authenticateAdmin}" />
+			<error-handler >
+				<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="1691cfb0-f5fe-488e-ba62-57a625c75c70" >
+					<logger level="INFO" doc:name="Logger" doc:id="e2c185e7-7c5d-4090-8b39-e95974da7acb" message="Ready"/>
+				</on-error-continue>
+			</error-handler>
+		</try>
+		<ee:transform doc:name="Readiness Response" doc:id="93841fc9-2a04-4450-88de-c483bfe4ac5f" >
+			<ee:message >
+				<ee:set-payload resource="dwl/health.dwl" />
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>
